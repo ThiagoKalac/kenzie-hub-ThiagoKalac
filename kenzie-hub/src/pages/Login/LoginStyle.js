@@ -24,7 +24,7 @@ const LoginForm = styled.form`
      gap:16px;
      width: 100%;
      max-width: 600px;
-     height: 500px;
+     height: 530px;
      padding: 16px;
      border-radius: 6px;
      background-color: var(--gray-3);
@@ -62,6 +62,24 @@ const LoginForm = styled.form`
           margin: 16px auto;
           font: var(--headLine);
           color: var(--gray-1);
+     }
+
+     a{
+          width: 100%;
+          padding: 12px;
+          border:none;
+          border-radius: 4px;
+          color:var(--gray-0);
+          font: var(--button);
+          background-color: var(--gray-1);
+          cursor: pointer;
+          text-align: center;
+
+               &:hover,&:focus,&:active{
+                    background-color: var(--gray-2);
+                    transition: 0.2s ease-in-out;
+               }
+
      }
 
 `

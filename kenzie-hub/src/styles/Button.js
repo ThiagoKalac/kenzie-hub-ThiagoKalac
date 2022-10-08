@@ -7,11 +7,11 @@ export const BtnMain = styled.button`
      border-radius: 4px;
      color:var(--gray-0);
      font: var(--button);
-     background-color: ${props=> props.backgroundColor };
+     background-color: var(--color-primary);
      cursor: pointer;
 
      &:hover,&:focus,&:active{
-          background-color: ${props=> props.hover };
+          background-color: var(--color-primary-focus);
           transition: 0.2s ease-in-out;
      }
 
