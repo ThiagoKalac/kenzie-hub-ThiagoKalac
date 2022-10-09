@@ -1,18 +1,24 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Login from '../pages/login/Login';
+import Dashboard from '../pages/dashboard/dashboard';
+import Login from '../pages/login/login';
 import Register from '../pages/register/register';
 
 
-const RoutesMain = () => (
+const RoutesMain = () => {
+     
+     return (
+          
 
+          <Routes>
+               <Route path="/" element={<Login/>}></Route>
+               <Route path="/register" element={<Register />}/>
+               <Route path="/dashboard" element={<Dashboard />}/>     
+               <Route path="*" element={<Navigate to="/" />} />
+               
+          </Routes>
+     )
 
-     <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/register" element={<Register />}></Route>
-          <Route path="*" element={<Navigate to="/" />}/>
-     </Routes>
-
-)
+}
 
 
 

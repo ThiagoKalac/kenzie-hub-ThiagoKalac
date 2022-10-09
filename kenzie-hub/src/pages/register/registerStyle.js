@@ -45,7 +45,7 @@ const Section = styled.section`
 const RegisterForm = styled.form`
      display: flex;
      flex-direction: column;
-     gap:10px;
+     gap:7px;
      width: 100%;
      max-width: 600px;
      padding: 16px;

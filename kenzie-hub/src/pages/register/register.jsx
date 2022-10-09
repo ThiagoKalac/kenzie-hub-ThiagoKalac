@@ -5,17 +5,24 @@ import { BtnMain } from "../../styles/Button.js";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
-import { RegisterApi } from "../../services/api";
-import { useState } from "react";
+import { RegisterUserApi } from "../../services/api";
+import { useState, useEffect } from "react";
 import { toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
      const [loading , setLoading] = useState(false)
      const navigate = useNavigate()
+     const token = localStorage.getItem('@KenzieHubToken')
 
+     useEffect(() => {
+          if (token) {
+               navigate("/dashboard")
+          }
+     })
      const registerSchema = yup.object().shape({
           name: yup.string().required("Informe seu nome"),
-          email: yup.string().required("Informa um e-mail cadastrado").email('E-mail invalido'),
+          email: yup.string().required("E-mail obrigatório").email('Informe um E-mail valido'),
           password: yup.string()
                .matches(/[A-Z]/, 'Deve conter ao menos 1 letra maiúscula')
                .matches(/[a-z]/, 'Deve conter ao menos 1 letra minuscula')
@@ -24,7 +31,7 @@ const Register = () => {
                .matches(/.{8,}/, 'Deve ter no minimo 8 digitos')
                .required('Senha é obrigatória'),
           confirmPassword: yup.string().oneOf([yup.ref('password')], 'Confirmação de senha deve ser igual a senha'),
-          bio: yup.string(),
+          bio: yup.string().required(),
           contact: yup.string().required('Informe um número para contato via whatsapp'),
           course_module: yup.string().required('Escolha um módulo'),
      });
@@ -35,19 +42,20 @@ const Register = () => {
      })
 
      const subimitRegisterUser = async (data) => {
-          
           if (data) {
                setLoading(true)
                const loadingToast = toast.loading("Carregando...")
-               const responseApi = await RegisterApi(data)
+               const responseApi = await RegisterUserApi(data)
                
                if (responseApi.status === 201) {
+
                     setLoading(false)
+                    
                     toast.update(loadingToast, { render: "Cadastrado com sucesso", type: "success", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
                     navigate('/')
 
                } else {
-                    
+                    console.log(responseApi)
                     toast.update(loadingToast, { render: "Ops, algo deu errado!", type: "error", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
                     setTimeout(() => { 
                          setLoading(false)
@@ -93,12 +101,12 @@ const Register = () => {
                     <label htmlFor="course_module">Selecionar módulo</label>
                     <select {...register('course_module')}>
                          <option value="">escolha seu módulo</option>
-                         <option value="m1">módulo 1</option>
-                         <option value="m2">módulo 2</option>
-                         <option value="m3">módulo 3</option>
-                         <option value="m4">módulo 4</option>
-                         <option value="m5">módulo 5</option>
-                         <option value="m6">módulo 6</option>
+                         <option value="m1">M1: Introdução ao HTML/CSS</option>
+                         <option value="m2">M2: JavaScript</option>
+                         <option value="m3">M3: React</option>
+                         <option value="m4">M4: Introdução ao BackEnd</option>
+                         <option value="m5">M5: Python/Node.js</option>
+                         <option value="m6">M6: Empregabilidade</option>
                     </select>
                     <p className="textError">{errors.module?.message}</p>
                     <BtnMain type="submit" disabled={loading}>

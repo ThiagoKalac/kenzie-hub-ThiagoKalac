@@ -7,14 +7,18 @@ const apiRequest = axios.create({
 })
 
 
-const RegisterApi = async (data) => {
+const RegisterUserApi = async (data) => {
 return await apiRequest.post("/users", data)
+     .then(response => response)
+     .catch(err => err)
+}
+
+const LoginUserApi = async (data) => {
+     return await apiRequest.post("/sessions", data)
      .then(response => response)
      .catch(err => err)
 }
 
 
 
-
-
-export { RegisterApi }
+export { RegisterUserApi, LoginUserApi }
