@@ -27,7 +27,7 @@ const GlobalStyle = createGlobalStyle`
 
 		--title-1:   	 700 30px 'Inter', sans-serif;
 		--title-2:  	 700 24px 'Inter', sans-serif;
-		--title-3:  	 700 16px 'Inter', sans-serif;
+		--title-3:  	 700 20px 'Inter', sans-serif;
 		--input:        400 16px 'Inter', sans-serif;
 		--button:       500 16px 'Inter', sans-serif;
 		--headLine: 	 400 14px 'Inter', sans-serif;
