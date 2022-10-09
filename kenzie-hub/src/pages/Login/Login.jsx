@@ -2,10 +2,12 @@ import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} f
 import { Section, LoginForm } from "./LoginStyle";
 import { BtnMain } from "../../styles/Button.js";
 import Input from "../../styles/Input.js";
-import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Link } from 'react-router-dom';
+
 
 const Login = () => {
      const [typeInput, setTypeInput] = useState('password')
@@ -19,10 +21,7 @@ const Login = () => {
           resolver: yupResolver(formSchema),
      })
 
-     console.log(errors)
-
      const seePassword = (boolean) => {
-          console.log(boolean)
           return boolean? setTypeInput('text') : setTypeInput('password')
      }
 
@@ -38,12 +37,9 @@ const Login = () => {
                <LoginForm onSubmit={handleSubmit(loginUser)}>
                     <h2>Login</h2>
                     <label htmlFor="email">Email</label>
-                    <Input
-                         type="email"
-                         placeholder=" Digite seu e-mail"
-                         {...register("email")}
-                    />
+                    <Input placeholder=" Digite seu e-mail"  {...register("email")} />
                     <p className="textError">{errors.email?.message}</p>
+
                     <label htmlFor="password">Senha</label>
                     <div className="boxInputVisiblePassword">
                          <Input
@@ -59,21 +55,11 @@ const Login = () => {
                               <VisibleOff className="iconVisiblePassaword" onClick={()=>seePassword(true)} />
                          }
                     </div>
-                    <BtnMain
-                         backgroundColor={'var(--color-primary)'}
-                         hover={'var(--color-primary-focus)'}
-                         type="submit">
-                         Entrar
-                    </BtnMain>
+                    <BtnMain type="submit">Entrar</BtnMain>
 
                     <span>Ainda não possui uma conta?</span>
 
-                    <BtnMain
-                         backgroundColor={'var(--gray-1)'}
-                         hover={'var(--gray-2)'}
-                         type="submit">
-                         Cadastre-se
-                    </BtnMain>
+                    <Link to={'../register'}>Cadastre-se</Link>
                </LoginForm>
 
      
