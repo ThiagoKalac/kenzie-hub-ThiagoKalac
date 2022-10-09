@@ -5,9 +5,12 @@ import { BtnMain } from "../../styles/Button.js";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from '@hookform/resolvers/yup';
+import { RegisterApi } from "../../services/api";
+import { useState } from "react";
+import { toast} from 'react-toastify';
 
 const Register = () => {
-
+     const [loading , setLoading] = useState(false)
      const navigate = useNavigate()
 
      const registerSchema = yup.object().shape({
@@ -23,7 +26,7 @@ const Register = () => {
           confirmPassword: yup.string().oneOf([yup.ref('password')], 'Confirmação de senha deve ser igual a senha'),
           bio: yup.string(),
           contact: yup.string().required('Informe um número para contato via whatsapp'),
-          module: yup.string().required('Escolha um módulo'),
+          course_module: yup.string().required('Escolha um módulo'),
      });
 
      
@@ -31,10 +34,28 @@ const Register = () => {
           resolver: yupResolver(registerSchema),
      })
 
-     const registerUser = (data) => {
-          return console.log(data)
-          // redirecionar para login
+     const subimitRegisterUser = async (data) => {
+          
+          if (data) {
+               setLoading(true)
+               const loadingToast = toast.loading("Carregando...")
+               const responseApi = await RegisterApi(data)
+               
+               if (responseApi.status === 201) {
+                    setLoading(false)
+                    toast.update(loadingToast, { render: "Cadastrado com sucesso", type: "success", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
+                    navigate('/')
+
+               } else {
+                    
+                    toast.update(loadingToast, { render: "Ops, algo deu errado!", type: "error", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
+                    setTimeout(() => { 
+                         setLoading(false)
+                    },2000)
+               }
+          }
      }
+
 
      return (
           <Section>
@@ -42,7 +63,7 @@ const Register = () => {
                     <h1>Kenzie Hub</h1>
                     <Link onClick={()=> navigate(-1)}>Voltar</Link>
                </div>
-               <RegisterForm onSubmit={handleSubmit(registerUser)}>
+               <RegisterForm onSubmit={handleSubmit(subimitRegisterUser)}>
                     <h2>Crie sua conta</h2>
                     <span>Rapido e grátis, vamos nessa</span>
 
@@ -69,8 +90,8 @@ const Register = () => {
                     <Input type="tel" placeholder=" Qual seu whatsapp?" {...register("contact")} />
                     <p className="textError">{errors.contact?.message}</p>
                     
-                    <label htmlFor="module">Selecionar módulo</label>
-                    <select {...register('module')}>
+                    <label htmlFor="course_module">Selecionar módulo</label>
+                    <select {...register('course_module')}>
                          <option value="">escolha seu módulo</option>
                          <option value="m1">módulo 1</option>
                          <option value="m2">módulo 2</option>
@@ -80,7 +101,16 @@ const Register = () => {
                          <option value="m6">módulo 6</option>
                     </select>
                     <p className="textError">{errors.module?.message}</p>
-                    <BtnMain type="submit">Cadastrar</BtnMain>
+                    <BtnMain type="submit" disabled={loading}>
+                         {loading ?
+                              <>
+                                   <div className="animationLoadign"></div>
+                                   "Cadastrando..."
+                              </>
+                              : 
+                              "Cadastrar"
+                         }
+                    </BtnMain>
                </RegisterForm>
           </Section>
      )
