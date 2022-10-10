@@ -1,21 +1,21 @@
-import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} from 'react-icons/md'; 
+import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} from "react-icons/md"; 
 import { Section, LoginForm } from "./loginStyle";
 import { BtnMain } from "../../styles/Button.js";
 import Input from "../../styles/Input.js";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from '@hookform/resolvers/yup';
-import { Link, useNavigate } from 'react-router-dom';
-import { LoginUserApi } from '../../services/api';
-import { ToastContainer,toast, Flip } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginUserApi } from "../../services/api";
+import { ToastContainer,toast, Flip } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
-     const [typeInput, setTypeInput] = useState('password')
+     const [typeInput, setTypeInput] = useState("password")
      const [loading, setLoading] = useState(false)
      const navigate = useNavigate()
-     const token = localStorage.getItem('@KenzieHubToken')
+     const token = localStorage.getItem("@KenzieHubToken")
 
      useEffect(() => {
           if (token) {
@@ -24,7 +24,7 @@ const Login = () => {
      })
 
      const formSchema = yup.object().shape({
-          email: yup.string().required("Informa um e-mail cadastrado").email('E-mail invalido'),
+          email: yup.string().required("Informa um e-mail cadastrado").email("E-mail invalido"),
           password: yup.string().required("senha ou e-mail invalido")
      })
 
@@ -33,7 +33,7 @@ const Login = () => {
      })
 
      const seePassword = (boolean) => {
-          return boolean? setTypeInput('text') : setTypeInput('password')
+          return boolean? setTypeInput("text") : setTypeInput("password")
      }
 
      const subimitLoginUser = async (data) => {
@@ -90,7 +90,7 @@ const Login = () => {
                          />
                          <p className="textError">{errors.password?.message}</p>
                          {
-                         typeInput === 'text'?
+                         typeInput === "text"?
                               <Visible className="iconVisiblePassaword" onClick={()=>seePassword(false)} />
                               :
                               <VisibleOff className="iconVisiblePassaword" onClick={()=>seePassword(true)} />
@@ -109,7 +109,7 @@ const Login = () => {
 
                     <span>Ainda não possui uma conta?</span>
 
-                    <Link to={'../register'}>Cadastre-se</Link>
+                    <Link to={"../register"}>Cadastre-se</Link>
                </LoginForm>
                <ToastContainer/>
      </Section>
