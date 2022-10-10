@@ -1,11 +1,11 @@
 import { Header, Main, Nav } from "./dashboardStyle"
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
 
 
 const Dashboard = () => {
      const navigate = useNavigate()
-     const nameUser = localStorage.getItem('@NameUser')
-     const moduleUser = localStorage.getItem('@ModuleUser')
+     const nameUser = localStorage.getItem("@NameUser")
+     const moduleUser = localStorage.getItem("@ModuleUser")
 
 
      

@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 
 const apiRequest = axios.create({
      baseURL: "https://kenziehub.herokuapp.com",
      timeout: 5000,
-     headers: {'Content-Type': 'application/json'},
+     headers: {"Content-Type": "application/json"},
 })
 
 

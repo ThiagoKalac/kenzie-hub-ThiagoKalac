@@ -42,6 +42,7 @@ const Header = styled.header`
      align-items: center;
      height: 118px;
      padding: 24px;
+     border-bottom: 1px solid var(--gray-0);
           
           .textWelcomeUser{
                font:var(--title-2);
@@ -52,6 +53,12 @@ const Header = styled.header`
                font:var(--title-3);
                color: var(--gray-1);
           }
+
+
+     @media (max-width: 768px) {
+          flex-direction: column;
+          align-items: flex-start;
+     }      
 `
 
 const Main = styled.main`
