@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterUserApi } from "../../services/api";
 import { useState, useEffect } from "react";
-import { toast} from "react-toastify";
+import { ToastContainer,toast, Flip} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
@@ -51,12 +51,12 @@ const Register = () => {
 
                     setLoading(false)
                     
-                    toast.update(loadingToast, { render: "Cadastrado com sucesso", type: "success", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
+                    toast.update(loadingToast, { render: "Cadastrado com sucesso", type: "success", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center",  transition: Flip});
                     navigate("/")
 
                } else {
                     console.log(responseApi)
-                    toast.update(loadingToast, { render: "Ops, algo deu errado!", type: "error", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center"});
+                    toast.update(loadingToast, { render: "Ops, esse e-mail já existe", type: "error", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center",transition: Flip});
                     setTimeout(() => { 
                          setLoading(false)
                     },2000)
@@ -120,6 +120,7 @@ const Register = () => {
                          }
                     </BtnMain>
                </RegisterForm>
+               <ToastContainer/>
           </Section>
      )
 }
