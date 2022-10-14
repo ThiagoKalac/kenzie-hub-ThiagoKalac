@@ -4,12 +4,12 @@ import { BtnMain } from "../../styles/Button.js";
 import Input from "../../styles/Input.js";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUserApi } from "../../services/api";
 import { ToastContainer,toast, Flip } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loginSchema } from "./loginSchema";
 
 const Login = () => {
      const [typeInput, setTypeInput] = useState("password")
@@ -17,19 +17,17 @@ const Login = () => {
      const navigate = useNavigate()
      const token = localStorage.getItem("@KenzieHubToken")
 
+     
      useEffect(() => {
           if (token) {
                navigate("/dashboard")
           }
      })
 
-     const formSchema = yup.object().shape({
-          email: yup.string().required("Informa um e-mail cadastrado").email("E-mail invalido"),
-          password: yup.string().required("senha ou e-mail invalido")
-     })
+     
 
      const { register, handleSubmit , formState:{errors} } = useForm({
-          resolver: yupResolver(formSchema),
+          resolver: yupResolver(loginSchema),
      })
 
      const seePassword = (boolean) => {

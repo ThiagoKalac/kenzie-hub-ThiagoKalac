@@ -11,8 +11,11 @@ const Dashboard = () => {
      useEffect(() => {
           if (!token) {
                navigate("/")
+             
           }
      })
+
+  
      
      return (
           <section className="container">

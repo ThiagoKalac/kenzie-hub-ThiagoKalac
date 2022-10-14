@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../styles/Input";
 import { BtnMain } from "../../styles/Button.js";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { RegisterUserApi } from "../../services/api";
 import { useState, useEffect } from "react";
 import { ToastContainer,toast, Flip} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { registerSchema } from "./registerSchema";
 
 const Register = () => {
      const [loading , setLoading] = useState(false)
@@ -18,24 +18,10 @@ const Register = () => {
      useEffect(() => {
           if (token) {
                navigate("/dashboard")
+      
           }
      })
-     const registerSchema = yup.object().shape({
-          name: yup.string().required("Informe seu nome"),
-          email: yup.string().required("E-mail obrigatório").email("Informe um E-mail valido"),
-          password: yup.string()
-               .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
-               .matches(/[a-z]/, "Deve conter ao menos 1 letra minuscula")
-               .matches(/(\d)/, "Deve conter ao menos um número")
-               .matches(/(\W)|_/, "Deve conter um caracter especial")
-               .matches(/.{8,}/, "Deve ter no minimo 8 digitos")
-               .required('Senha é obrigatória'),
-          confirmPassword: yup.string().oneOf([yup.ref('password')], 'Confirmação de senha deve ser igual a senha'),
-          bio: yup.string().required("Bio é necessário"),
-          contact: yup.string().required("Informe um número para contato via whatsapp"),
-          course_module: yup.string().required("Escolha um módulo"),
-     });
-
+     
      
      const { register, handleSubmit, formState: { errors } } = useForm({
           resolver: yupResolver(registerSchema),
