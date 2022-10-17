@@ -31,6 +31,7 @@ const UserProvider = ({ children }) => {
                     } 
                }
           })()
+     // eslint-disable-next-line react-hooks/exhaustive-deps
      },[loadingDelete])
 
      const userLogin = async (data) => {
@@ -89,6 +90,7 @@ const UserProvider = ({ children }) => {
           setLoading(true)
 
           try {
+               // eslint-disable-next-line no-unused-vars
                const responseApi = await RegisterUserApi(data)
                               
                toast.update(loadingToast, {
