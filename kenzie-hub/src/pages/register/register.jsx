@@ -3,65 +3,25 @@ import { Link, useNavigate } from "react-router-dom";
 import Input from "../../styles/Input";
 import { BtnMain } from "../../styles/Button.js";
 import { useForm } from "react-hook-form";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { RegisterUserApi } from "../../services/api";
-import { useState, useEffect } from "react";
-import { ToastContainer,toast, Flip} from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useContext } from "react";
+import { registerSchema } from "./registerSchema";
+import { UserContext } from "../../context/UserContext";
 
 const Register = () => {
-     const [loading , setLoading] = useState(false)
+     const {userRegister,loading} = useContext(UserContext)
      const navigate = useNavigate()
-     const token = localStorage.getItem("@KenzieHubToken")
-
-     useEffect(() => {
-          if (token) {
-               navigate("/dashboard")
-          }
-     })
-     const registerSchema = yup.object().shape({
-          name: yup.string().required("Informe seu nome"),
-          email: yup.string().required("E-mail obrigatório").email("Informe um E-mail valido"),
-          password: yup.string()
-               .matches(/[A-Z]/, "Deve conter ao menos 1 letra maiúscula")
-               .matches(/[a-z]/, "Deve conter ao menos 1 letra minuscula")
-               .matches(/(\d)/, "Deve conter ao menos um número")
-               .matches(/(\W)|_/, "Deve conter um caracter especial")
-               .matches(/.{8,}/, "Deve ter no minimo 8 digitos")
-               .required('Senha é obrigatória'),
-          confirmPassword: yup.string().oneOf([yup.ref('password')], 'Confirmação de senha deve ser igual a senha'),
-          bio: yup.string().required("Bio é necessário"),
-          contact: yup.string().required("Informe um número para contato via whatsapp"),
-          course_module: yup.string().required("Escolha um módulo"),
-     });
-
+   
+     
      
      const { register, handleSubmit, formState: { errors } } = useForm({
           resolver: yupResolver(registerSchema),
      })
 
      const subimitRegisterUser = async (data) => {
-          if (data) {
-               setLoading(true)
-               const loadingToast = toast.loading("Carregando...")
-               const responseApi = await RegisterUserApi(data)
-               
-               if (responseApi.status === 201) {
 
-                    setLoading(false)
-                    
-                    toast.update(loadingToast, { render: "Cadastrado com sucesso", type: "success", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center",  transition: Flip});
-                    navigate("/")
-
-               } else {
-                    console.log(responseApi)
-                    toast.update(loadingToast, { render: "Ops, esse e-mail já existe", type: "error", isLoading: false, autoClose: 2000, theme:"dark",position: "top-center",transition: Flip});
-                    setTimeout(() => { 
-                         setLoading(false)
-                    },2000)
-               }
-          }
+          userRegister(data)
+         
      }
 
 
@@ -93,9 +53,10 @@ const Register = () => {
 
                     <label htmlFor="bio">Bio</label>
                     <Input type="text" placeholder=" Fala sobre você" {...register("bio")} />
+                    <p className="textError">{errors.bio?.message}</p>
 
                     <label htmlFor="contact">Contato</label>
-                    <Input type="tel" placeholder=" Qual seu whatsapp?" {...register("contact")} />
+                    <Input type="tel" placeholder=" Linkedin ou WhatsApp" {...register("contact")} />
                     <p className="textError">{errors.contact?.message}</p>
                     
                     <label htmlFor="course_module">Selecionar módulo</label>
@@ -108,7 +69,7 @@ const Register = () => {
                          <option value="m5">M5: Python/Node.js</option>
                          <option value="m6">M6: Empregabilidade</option>
                     </select>
-                    <p className="textError">{errors.module?.message}</p>
+                    <p className="textError">{errors.course_module?.message}</p>
                     <BtnMain type="submit" disabled={loading}>
                          {loading ?
                               <>
@@ -120,7 +81,6 @@ const Register = () => {
                          }
                     </BtnMain>
                </RegisterForm>
-               <ToastContainer/>
           </Section>
      )
 }
