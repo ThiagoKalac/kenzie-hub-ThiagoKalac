@@ -28,9 +28,11 @@ const GlobalStyle = createGlobalStyle`
 		--title-1:   	 700 30px 'Inter', sans-serif;
 		--title-2:  	 700 24px 'Inter', sans-serif;
 		--title-3:  	 700 20px 'Inter', sans-serif;
+		--title-4:  	 600 18px 'Inter', sans-serif;
 		--input:        400 16px 'Inter', sans-serif;
 		--button:       500 16px 'Inter', sans-serif;
 		--headLine: 	 400 14px 'Inter', sans-serif;
+		--text-card:	 700 16px 'Inter', sans-serif;
 		--headLine-bold:700 12px 'Inter', sans-serif;
 
 	}
@@ -44,6 +46,11 @@ const GlobalStyle = createGlobalStyle`
 		max-width: 1400px;
 		margin: 0 auto;
 		padding: 16px;
+	}
+
+	.divBorderBottomDashboard{
+		width: 100%;
+		border-bottom: 1px solid var(--gray-3);
 	}
 
 	.textError{
@@ -71,7 +78,7 @@ table, caption, tbody, tfoot, thead, tr, th, td,
 article, aside, canvas, details, embed, 
 figure, figcaption, footer, header, hgroup, 
 menu, nav, output, ruby, section, summary,
-time, mark, audio, video,main {
+time, mark, audio, video,main, dialog {
 	margin: 0;
 	padding: 0;
 	border: 0;

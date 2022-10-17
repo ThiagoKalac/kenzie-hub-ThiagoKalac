@@ -2,28 +2,18 @@ import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} f
 import { Section, LoginForm } from "./loginStyle";
 import { BtnMain } from "../../styles/Button.js";
 import Input from "../../styles/Input.js";
-import { useState, useEffect } from "react";
+import { useState, useContext} from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Link, useNavigate } from "react-router-dom";
-import { LoginUserApi } from "../../services/api";
-import { ToastContainer,toast, Flip } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { Link } from "react-router-dom";
 import { loginSchema } from "./loginSchema";
+import { UserContext } from "../../context/UserContext";
+
 
 const Login = () => {
+     const {userLogin, loading } = useContext(UserContext)
      const [typeInput, setTypeInput] = useState("password")
-     const [loading, setLoading] = useState(false)
-     const navigate = useNavigate()
-     const token = localStorage.getItem("@KenzieHubToken")
-
-     
-     useEffect(() => {
-          if (token) {
-               navigate("/dashboard")
-          }
-     })
-
+    
      
 
      const { register, handleSubmit , formState:{errors} } = useForm({
@@ -34,38 +24,10 @@ const Login = () => {
           return boolean? setTypeInput("text") : setTypeInput("password")
      }
 
-     const subimitLoginUser = async (data) => {
+     const subimitLogin = (data) => {
 
-          if(data){
-
-               const responseApi = await LoginUserApi(data)
-               const loadingToast = toast.loading("Carregando...")
-               setLoading(true)
-
-               if (responseApi.status === 200) {
-
-                    toast.update(loadingToast, { render: `Seja bem vindo ${responseApi.data.user.name}`, type: "success", isLoading: false, autoClose:2000, theme: "dark", position: "top-center", closeOnClick: true, pauseOnHover: true, draggable: true,            progress: undefined, transition: Flip });
-                    
-
-                    setLoading(false)
-
-                    
-                    localStorage.clear()
-                    localStorage.setItem("@KenzieHubToken", responseApi.data.token)
-                    localStorage.setItem("@KenzieHubIdUser", responseApi.data.user.id)
-                    localStorage.setItem("@NameUser", responseApi.data.user.name)
-                    localStorage.setItem("@ModuleUser", responseApi.data.user.course_module)
-
-                    navigate("/dashboard")
-
-               } else {
-                    toast.update(loadingToast, { render:`Senha ou e-mail invalido`, type: "error", isLoading:false, autoClose:2000, theme: "dark", position: "top-center", closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined,  transition: Flip});
-                    
-                    setTimeout(() => {
-                    setLoading(false)
-                    }, 2000);
-               }
-          }
+          userLogin(data)
+         
      }
 
      return (
@@ -73,7 +35,7 @@ const Login = () => {
      <Section>
                <h1>Kenzie Hub</h1>
 
-               <LoginForm onSubmit={handleSubmit(subimitLoginUser)}>
+               <LoginForm onSubmit={handleSubmit(subimitLogin)}>
                     <h2>Login</h2>
                     <label htmlFor="email">Email</label>
                     <Input placeholder=" Digite seu e-mail"  {...register("email")} />
@@ -109,7 +71,7 @@ const Login = () => {
 
                     <Link to={"../register"}>Cadastre-se</Link>
                </LoginForm>
-               <ToastContainer/>
+              
      </Section>
 
 )};

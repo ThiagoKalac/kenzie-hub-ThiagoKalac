@@ -1,37 +1,53 @@
 import { Header, Main, Nav } from "./dashboardStyle"
-import { Link, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useContext, useState } from "react";
+import { UserContext } from "../../context/UserContext";
+import Card from "./card/card";
+import Modal from "../../components/modal/modal";
+
 
 const Dashboard = () => {
-     const navigate = useNavigate()
-     const nameUser = localStorage.getItem("@NameUser")
-     const moduleUser = localStorage.getItem("@ModuleUser")
-     const token = localStorage.getItem("@KenzieHubToken")
-
-     useEffect(() => {
-          if (!token) {
-               navigate("/")
-             
-          }
-     })
-
-  
+     const { user , technologysUser } = useContext(UserContext)
+     const { name, course_module } = user
+     const [ showModal , setShowModal ] = useState(false)
+     
+     const callModal = () => {
+          setShowModal(true)
+     }
      
      return (
-          <section className="container">
-               <Nav>
-                    <h1>Kenzie Hub</h1>
-                    <Link to={navigate("/")} onClick={()=> localStorage.clear()}>Sair</Link>
-               </Nav>  
-               <Header>
-                    <p className="textWelcomeUser">Olá, {nameUser}</p> 
-                    <p className="textModule">{moduleUser}</p>
-               </Header>
-               <Main>
-                    <p>Que pena! Estamos em desenvolvimento :(</p>
-                    <span>Nossa aplicação está em desenvolvimento, em breve teremos novidades</span>
+          <>
+               <div className="divBorderBottomDashboard">
+                    <Nav className="container">
+                         <h1>Kenzie Hub</h1>
+                         <Link to={"/"} onClick={()=> localStorage.clear()}>Sair</Link>
+                    </Nav>  
+               </div>
+               <div className="divBorderBottomDashboard">
+                    <Header className="container">
+                         <p className="textWelcomeUser">Olá, {name}</p> 
+                         <p className="textModule">{course_module}</p>
+                    </Header>
+               </div>
+               <Main className="container">
+                    <div className="divAddTechnology">
+                         <p>Teclogias</p>
+                         <button type="button" onClick={()=> callModal()}>+</button>
+                    </div>
+                    <ul>
+                         {
+                              technologysUser.length > 0 ?
+                                   (technologysUser.map(elt => <Card key={elt.id} title={elt.title} status={elt.status} idTech={elt.id}/>))
+                                   :
+                                   (<h3>Não há tecnologias cadastradas ☹️</h3>)
+                         }
+                    </ul>
+                    {
+                        showModal ? (<Modal setShowModal={setShowModal} />) : (false) 
+                    }
+               
                </Main>
-          </section>
+          </>
      )
 }
 

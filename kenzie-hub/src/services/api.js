@@ -8,9 +8,7 @@ const apiRequest = axios.create({
 
 
 const RegisterUserApi = async (data) => {
-return await apiRequest.post("/users", data)
-     .then(response => response)
-     .catch(err => err)
+     return await apiRequest.post("/users", data)
 }
 
 const LoginUserApi = async (data) => {
@@ -19,6 +17,30 @@ const LoginUserApi = async (data) => {
      .catch(err => err)
 }
 
+const UserProfile = async (token) => { 
+     return await apiRequest.get("/profile", {
+          headers: {
+               Authorization: `Bearer ${token}`
+          }
+     })
+     .then(response => response)
+     .catch(err => err)     
+}
 
+const CreateTechnologyApi = async (data, token) => { 
+     return await apiRequest.post("/users/techs", data, {
+          headers: {
+               Authorization: `Bearer ${token}`
+          }        
+     })
+}
 
-export { RegisterUserApi, LoginUserApi }
+const DeleteTechnologyApi = async (id, token) => { 
+     return await apiRequest.delete(`/users/techs/${id}`, {
+          headers: {
+               Authorization: `Bearer ${token}`
+          }        
+     })
+}
+
+export { RegisterUserApi, LoginUserApi, UserProfile, CreateTechnologyApi, DeleteTechnologyApi}
