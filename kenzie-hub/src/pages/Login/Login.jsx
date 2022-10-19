@@ -1,7 +1,7 @@
 import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} from "react-icons/md"; 
 import { Section, LoginForm } from "./loginStyle";
-import { BtnMain } from "../../styles/Button.js";
-import Input from "../../styles/Input.js";
+import { BtnMain } from "../../styles/Button.ts";
+import Input from "../../styles/Input.ts";
 import { useState, useContext} from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";

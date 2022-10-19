@@ -1,7 +1,7 @@
 import { Section, RegisterForm } from "./registerStyle"
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../styles/Input";
-import { BtnMain } from "../../styles/Button.js";
+import { BtnMain } from "../../styles/Button.ts";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
