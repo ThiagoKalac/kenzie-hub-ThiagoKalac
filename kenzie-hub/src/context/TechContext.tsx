@@ -1,16 +1,28 @@
-import { createContext, useContext, useState} from "react";
+import { createContext, ReactNode, useContext, useState} from "react";
 import { CreateTechnologyApi, DeleteTechnologyApi } from "../services/api";
 import { UserContext } from "./UserContext";
 import { toast, Flip } from "react-toastify";
+import { iCreateTechnology } from "../components/modal/modal";
+
+interface iTechContextProps{
+     children: ReactNode;
+}
+
+interface iTechContext{
+     createTechnology:(data:iCreateTechnology) => void;
+     deleteTechnology:(id:string) => void;
+     loading: boolean;
+
+}
 
 
-export const TechContext = createContext({})
+export const TechContext = createContext<iTechContext>({} as iTechContext)
 
-const TechProvider = ({children}) => {
+const TechProvider = ({children}:iTechContextProps) => {
      const { technologysUser , setTechnologysUser , setLoadingDelete } = useContext(UserContext)
      const [loading, setLoading] = useState(false)
 
-     const createTechnology = async (data) => { 
+     const createTechnology = async (data:iCreateTechnology) => { 
 
           const token = localStorage.getItem("@KenzieHubToken")
           const loadingToast = toast.loading("Carregando...")
@@ -55,7 +67,7 @@ const TechProvider = ({children}) => {
           }
      }
      
-     const deleteTechnology = async (id) => { 
+     const deleteTechnology = async (id:string) => { 
           
           const token = localStorage.getItem("@KenzieHubToken")
          

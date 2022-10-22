@@ -1,4 +1,5 @@
 import axios from "axios";
+import { iCreateTechnology } from "../components/modal/modal";
 import { iUserLogin } from "../pages/login/Login";
 import { iUserRegister } from "../pages/register/register";
 
@@ -27,7 +28,7 @@ const UserProfile = async (token:string) => {
          
 }
 
-const CreateTechnologyApi = async (data:any, token:string) => { 
+const CreateTechnologyApi = async (data:iCreateTechnology, token:string) => { 
      return await apiRequest.post("/users/techs", data, {
           headers: {
                Authorization: `Bearer ${token}`
