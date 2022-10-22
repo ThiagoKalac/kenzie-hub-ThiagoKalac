@@ -12,8 +12,8 @@ interface iUserContextProps{
 
 interface iUser{
      id: string;
-     name: string;
-     email: string;
+     name: string | null;
+     email: string | null;
      course_module: string;
      bio: string;
      contact: string;
@@ -24,14 +24,20 @@ interface iUser{
      avatar_url: null;
 }
 
+interface iTechnologysUser{
+     id: string;
+	title: string;
+     status: string;
+}
+
 export interface iUserContext{
      userLogin: (data:iUserLogin) => void;
      userRegister:(data:iUserRegister) => void;
      loading: boolean;
      user: iUser | null;
-     technologysUser: any;
-     setTechnologysUser: any ;
-     setLoadingDelete: any ;
+     technologysUser: iTechnologysUser[];
+     setTechnologysUser: React.Dispatch<React.SetStateAction<iTechnologysUser[]>> ;
+     setLoadingDelete: React.Dispatch<React.SetStateAction<boolean>>  ;
 }
 
 
@@ -42,7 +48,7 @@ export const UserContext = createContext<iUserContext>({} as iUserContext)
 const UserProvider = ({ children }: iUserContextProps) => {
      const [loading, setLoading] = useState(false)
      const [user, setUser] = useState<iUser | null>(null)
-     const [technologysUser, setTechnologysUser] = useState()
+     const [technologysUser, setTechnologysUser] = useState<iTechnologysUser[]>([])
      const [loadingDelete, setLoadingDelete] = useState(false)
      const navigate = useNavigate()
      
@@ -123,7 +129,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
           setLoading(true)
 
           try {
-               // eslint-disable-next-line no-unused-vars
+               // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
                const responseApi = await RegisterUserApi(data)
                               
                toast.update(loadingToast, {

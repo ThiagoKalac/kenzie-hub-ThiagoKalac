@@ -1,4 +1,6 @@
 import axios from "axios";
+import { iUserLogin } from "../pages/login/Login";
+import { iUserRegister } from "../pages/register/register";
 
 const apiRequest = axios.create({
      baseURL: "https://kenziehub.herokuapp.com",
@@ -7,27 +9,25 @@ const apiRequest = axios.create({
 })
 
 
-const RegisterUserApi = async (data) => {
+const RegisterUserApi = async (data:iUserRegister) => {
      return await apiRequest.post("/users", data)
 }
 
-const LoginUserApi = async (data) => {
+const LoginUserApi = async (data:iUserLogin) => {
      return await apiRequest.post("/sessions", data)
-     .then(response => response)
-     .catch(err => err)
+    
 }
 
-const UserProfile = async (token) => { 
+const UserProfile = async (token:string) => { 
      return await apiRequest.get("/profile", {
           headers: {
                Authorization: `Bearer ${token}`
           }
      })
-     .then(response => response)
-     .catch(err => err)     
+         
 }
 
-const CreateTechnologyApi = async (data, token) => { 
+const CreateTechnologyApi = async (data:any, token:string) => { 
      return await apiRequest.post("/users/techs", data, {
           headers: {
                Authorization: `Bearer ${token}`
@@ -35,7 +35,7 @@ const CreateTechnologyApi = async (data, token) => {
      })
 }
 
-const DeleteTechnologyApi = async (id, token) => { 
+const DeleteTechnologyApi = async (id:string, token:string) => { 
      return await apiRequest.delete(`/users/techs/${id}`, {
           headers: {
                Authorization: `Bearer ${token}`
