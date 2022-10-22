@@ -12,8 +12,9 @@ interface iTechContext{
      createTechnology:(data:iCreateTechnology) => void;
      deleteTechnology:(id:string) => void;
      loading: boolean;
-
+     
 }
+
 
 
 export const TechContext = createContext<iTechContext>({} as iTechContext)

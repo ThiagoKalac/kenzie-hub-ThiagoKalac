@@ -28,7 +28,7 @@ const UserProfile = async (token:string) => {
          
 }
 
-const CreateTechnologyApi = async (data:iCreateTechnology, token:string) => { 
+const CreateTechnologyApi = async (data:iCreateTechnology,token:string | null) => { 
      return await apiRequest.post("/users/techs", data, {
           headers: {
                Authorization: `Bearer ${token}`
@@ -36,7 +36,7 @@ const CreateTechnologyApi = async (data:iCreateTechnology, token:string) => {
      })
 }
 
-const DeleteTechnologyApi = async (id:string, token:string) => { 
+const DeleteTechnologyApi = async (id:string, token:string | null) => { 
      return await apiRequest.delete(`/users/techs/${id}`, {
           headers: {
                Authorization: `Bearer ${token}`

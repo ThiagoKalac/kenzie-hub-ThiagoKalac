@@ -12,9 +12,12 @@ export interface iCreateTechnology{
      status: string;
 }
 
+interface iModalProps{
+     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
 
-const Modal = ({setShowModal}) => { 
+const Modal = ({setShowModal}:iModalProps) => { 
      const { createTechnology, loading } = useContext(TechContext)
 
      const { register, handleSubmit , formState:{errors}, reset } = useForm<iCreateTechnology>({
