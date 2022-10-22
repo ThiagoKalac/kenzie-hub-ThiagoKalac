@@ -1,12 +1,23 @@
 import { Section, RegisterForm } from "./registerStyle"
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../styles/Input";
-import { BtnMain } from "../../styles/Button.ts";
+import { BtnMain } from "../../styles/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { registerSchema } from "./registerSchema";
 import { UserContext } from "../../context/UserContext";
+
+export interface iUserRegister{
+     name: string;
+     email: string;
+     password: string;
+     confirmPassword: string;
+     bio: string;
+     contact: string;
+     course_module: string;
+}
+
 
 const Register = () => {
      const {userRegister,loading} = useContext(UserContext)
@@ -14,11 +25,11 @@ const Register = () => {
    
      
      
-     const { register, handleSubmit, formState: { errors } } = useForm({
+     const { register, handleSubmit, formState: { errors } } = useForm<iUserRegister>({
           resolver: yupResolver(registerSchema),
      })
 
-     const subimitRegisterUser = async (data) => {
+     const subimitRegisterUser = async (data:iUserRegister) => {
 
           userRegister(data)
          
@@ -29,7 +40,7 @@ const Register = () => {
           <Section>
                <div className="containerLogo">
                     <h1>Kenzie Hub</h1>
-                    <Link onClick={()=> navigate(-1)}>Voltar</Link>
+                    <Link to="" onClick={()=> navigate(-1)}>Voltar</Link>
                </div>
                <RegisterForm onSubmit={handleSubmit(subimitRegisterUser)}>
                     <h2>Crie sua conta</h2>
