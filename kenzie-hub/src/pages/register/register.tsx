@@ -1,12 +1,23 @@
 import { Section, RegisterForm } from "./registerStyle"
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../styles/Input";
-import { BtnMain } from "../../styles/Button.js";
+import { BtnMain } from "../../styles/Button";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useContext } from "react";
 import { registerSchema } from "./registerSchema";
 import { UserContext } from "../../context/UserContext";
+
+export interface iUserRegister{
+     name: string;
+     email: string;
+     password: string;
+     confirmPassword: string;
+     bio: string;
+     contact: string;
+     course_module: string;
+}
+
 
 const Register = () => {
      const {userRegister,loading} = useContext(UserContext)
@@ -14,11 +25,11 @@ const Register = () => {
    
      
      
-     const { register, handleSubmit, formState: { errors } } = useForm({
+     const { register, handleSubmit, formState: { errors } } = useForm<iUserRegister>({
           resolver: yupResolver(registerSchema),
      })
 
-     const subimitRegisterUser = async (data) => {
+     const subimitRegisterUser = async (data:iUserRegister) => {
 
           userRegister(data)
          
@@ -29,7 +40,7 @@ const Register = () => {
           <Section>
                <div className="containerLogo">
                     <h1>Kenzie Hub</h1>
-                    <Link onClick={()=> navigate(-1)}>Voltar</Link>
+                    <Link to="" onClick={()=> navigate(-1)}>Voltar</Link>
                </div>
                <RegisterForm onSubmit={handleSubmit(subimitRegisterUser)}>
                     <h2>Crie sua conta</h2>
@@ -62,12 +73,12 @@ const Register = () => {
                     <label htmlFor="course_module">Selecionar módulo</label>
                     <select {...register("course_module")}>
                          <option value="">Escolha seu módulo</option>
-                         <option value="m1">M1: Introdução ao HTML/CSS</option>
-                         <option value="m2">M2: JavaScript</option>
-                         <option value="m3">M3: React</option>
-                         <option value="m4">M4: Introdução ao BackEnd</option>
-                         <option value="m5">M5: Python/Node.js</option>
-                         <option value="m6">M6: Empregabilidade</option>
+                         <option value="M1: Introdução ao HTML/CSS">M1: Introdução ao HTML/CSS</option>
+                         <option value="M2: JavaScript">M2: JavaScript</option>
+                         <option value="M3: React">M3: React</option>
+                         <option value="M4: Introdução ao BackEnd">M4: Introdução ao BackEnd</option>
+                         <option value="M5: Python/Node.js">M5: Python/Node.js</option>
+                         <option value="M6: Empregabilidade">M6: Empregabilidade</option>
                     </select>
                     <p className="textError">{errors.course_module?.message}</p>
                     <BtnMain type="submit" disabled={loading}>

@@ -1,13 +1,19 @@
 import { MdOutlineVisibility as Visible, MdOutlineVisibilityOff as VisibleOff} from "react-icons/md"; 
 import { Section, LoginForm } from "./loginStyle";
-import { BtnMain } from "../../styles/Button.js";
-import Input from "../../styles/Input.js";
+import { BtnMain } from "../../styles/Button";
+import Input from "../../styles/Input";
 import { useState, useContext} from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Link } from "react-router-dom";
 import { loginSchema } from "./loginSchema";
 import { UserContext } from "../../context/UserContext";
+
+export interface iUserLogin{
+     email: string;
+     password: string;
+}
+
 
 
 const Login = () => {
@@ -16,15 +22,15 @@ const Login = () => {
     
      
 
-     const { register, handleSubmit , formState:{errors} } = useForm({
+     const { register, handleSubmit , formState:{errors} } = useForm<iUserLogin>({
           resolver: yupResolver(loginSchema),
      })
 
-     const seePassword = (boolean) => {
+     const seePassword = (boolean:boolean) => {
           return boolean? setTypeInput("text") : setTypeInput("password")
      }
 
-     const subimitLogin = (data) => {
+     const subimitLogin = (data:iUserLogin) => {
 
           userLogin(data)
          

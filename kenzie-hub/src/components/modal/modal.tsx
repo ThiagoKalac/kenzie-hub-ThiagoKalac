@@ -7,10 +7,20 @@ import ModalDialog from "./modalStyle"
 import { TechContext } from "../../context/TechContext";
 import { useContext } from "react"
 
-const Modal = ({setShowModal}) => { 
+export interface iCreateTechnology{
+     title: string;
+     status: string;
+}
+
+interface iModalProps{
+     setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
+const Modal = ({setShowModal}:iModalProps) => { 
      const { createTechnology, loading } = useContext(TechContext)
 
-     const { register, handleSubmit , formState:{errors}, reset } = useForm({
+     const { register, handleSubmit , formState:{errors}, reset } = useForm<iCreateTechnology>({
           resolver: yupResolver(modalCreateTechnologySchema),
      })
      
@@ -18,7 +28,7 @@ const Modal = ({setShowModal}) => {
           setShowModal(false)
      }
      
-     const onSubimit = (data) => {
+     const onSubimit = (data:iCreateTechnology) => {
           createTechnology(data)
           reset({
                title: "",

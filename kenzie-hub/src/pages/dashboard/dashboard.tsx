@@ -6,9 +6,10 @@ import Card from "./card/card";
 import Modal from "../../components/modal/modal";
 
 
+
 const Dashboard = () => {
-     const { user , technologysUser } = useContext(UserContext)
-     const { name, course_module } = user
+     const { user, technologysUser } = useContext(UserContext)
+     // const { name, course_module } = user
      const [ showModal , setShowModal ] = useState(false)
      
      const callModal = () => {
@@ -25,8 +26,8 @@ const Dashboard = () => {
                </div>
                <div className="divBorderBottomDashboard">
                     <Header className="container">
-                         <p className="textWelcomeUser">Olá, {name}</p> 
-                         <p className="textModule">{course_module}</p>
+                         <p className="textWelcomeUser">Olá, {user?.name}</p> 
+                         <p className="textModule">{user?.course_module}</p>
                     </Header>
                </div>
                <Main className="container">

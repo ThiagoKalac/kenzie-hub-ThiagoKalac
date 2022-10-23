@@ -1,15 +1,54 @@
 import { toast, Flip } from "react-toastify";
-import {LoginUserApi, RegisterUserApi, UserProfile } from "../services/api.js";
+import {LoginUserApi, RegisterUserApi, UserProfile } from "../services/api";
 import { useNavigate } from "react-router-dom";
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
+import { iUserLogin } from "../pages/login/Login";
+import { iUserRegister } from "../pages/register/register";
 
-export const UserContext = createContext({})
+interface iUserContextProps{
+     children: ReactNode;
+    
+} 
+
+export interface iUser{
+     id: string;
+     name: string | null;
+     email: string | null;
+     course_module: string;
+     bio: string;
+     contact: string;
+     techs: [];
+     works: [];
+     created_at: string;
+     updated_at: string;
+     avatar_url: null;
+}
+
+interface iTechnologysUser{
+     id: string;
+	title: string;
+     status: string;
+}
+
+export interface iUserContext{
+     userLogin: (data:iUserLogin) => void;
+     userRegister:(data:iUserRegister) => void;
+     loading: boolean;
+     user: iUser | null;
+     technologysUser: iTechnologysUser[];
+     setTechnologysUser: React.Dispatch<React.SetStateAction<iTechnologysUser[]>> ;
+     setLoadingDelete: React.Dispatch<React.SetStateAction<boolean>>  ;
+}
 
 
-const UserProvider = ({ children }) => {
+
+
+export const UserContext = createContext<iUserContext>({} as iUserContext)
+
+const UserProvider = ({ children }: iUserContextProps) => {
      const [loading, setLoading] = useState(false)
-     const [user, setUser] = useState(null)
-     const [technologysUser, setTechnologysUser] = useState()
+     const [user, setUser] = useState<iUser | null>(null)
+     const [technologysUser, setTechnologysUser] = useState<iTechnologysUser[]>([])
      const [loadingDelete, setLoadingDelete] = useState(false)
      const navigate = useNavigate()
      
@@ -18,7 +57,7 @@ const UserProvider = ({ children }) => {
                const token = localStorage.getItem("@KenzieHubToken")
                
                if (token) {
-                    
+                    navigate("/dashboard")
                     try {
                          const responseApi = await UserProfile(token)
                          setUser(responseApi.data)
@@ -26,7 +65,7 @@ const UserProvider = ({ children }) => {
                          navigate("/dashboard")
                          
                     } catch (error) {
-                         localStorage.clear("")
+                         localStorage.clear()
                          navigate("/")
                     } 
                }
@@ -34,7 +73,7 @@ const UserProvider = ({ children }) => {
      // eslint-disable-next-line react-hooks/exhaustive-deps
      },[loadingDelete])
 
-     const userLogin = async (data) => {
+     const userLogin = async (data:iUserLogin) => {
          
           const loadingToast = toast.loading("Carregando...")
           setLoading(true)
@@ -54,7 +93,7 @@ const UserProvider = ({ children }) => {
                     progress: undefined,
                     transition: Flip
                });
-              
+               
                localStorage.setItem("@KenzieHubToken",responseApi.data.token)
                setUser(responseApi.data.user)
                setTechnologysUser(responseApi.data.user.techs)
@@ -84,13 +123,13 @@ const UserProvider = ({ children }) => {
 
    
 
-     const userRegister = async (data) => {
+     const userRegister = async (data:iUserRegister) => {
           
           const loadingToast = toast.loading("Carregando...")
           setLoading(true)
 
           try {
-               // eslint-disable-next-line no-unused-vars
+               // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
                const responseApi = await RegisterUserApi(data)
                               
                toast.update(loadingToast, {
@@ -124,7 +163,7 @@ const UserProvider = ({ children }) => {
      }
 
      return (
-          <UserContext.Provider value={{ userLogin , userRegister , loading , user , technologysUser , setTechnologysUser , setLoadingDelete }}>
+          <UserContext.Provider value={{ userLogin , userRegister , loading , user , technologysUser , setTechnologysUser , setLoadingDelete}}>
                {children}
           </UserContext.Provider>
      )

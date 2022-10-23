@@ -3,7 +3,14 @@ import {CgTrash as Trash} from "react-icons/cg"
 import { TechContext } from "../../../context/TechContext";
 import LiCard from "./cardStyle";
 
-const Card = ({title,status,idTech}) => {
+interface iCardProps{
+     title: string;
+     status: string;
+     idTech: string;
+}
+
+
+const Card = ({title,status,idTech}:iCardProps) => {
      const {deleteTechnology} = useContext(TechContext)
 
    
