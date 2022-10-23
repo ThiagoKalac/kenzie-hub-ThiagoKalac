@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import "animate.css"
 
 const Nav = styled.nav`
 
@@ -8,7 +8,7 @@ const Nav = styled.nav`
      align-items: center;
      width: 100%;
      height: 72px;
-
+     animation: lightSpeedInLeft 1.5s ease;
      h1{
           font:var(--title-1);
           color: var(--color-primary);
@@ -40,7 +40,7 @@ const Header = styled.header`
      justify-content: space-between;
      align-items: center;
      height: 118px;
-          
+     animation: lightSpeedInRight 1.5s ease;    
           .textWelcomeUser{
                font:var(--title-2);
                color: var(--gray-0);
@@ -63,7 +63,9 @@ const Main = styled.main`
      flex-direction: column;
      justify-content: center;
      gap: 24px;
-       
+     animation: backInDown 1s ease;
+     animation-delay: 0.5s;
+     animation-fill-mode: backwards;
      
           .divAddTechnology{
                display: flex;
