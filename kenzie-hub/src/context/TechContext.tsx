@@ -30,7 +30,6 @@ const TechProvider = ({children}:iTechContextProps) => {
           setLoading(true)
           try {
                const responseApi = await CreateTechnologyApi(data, token)
-
                toast.update(loadingToast, {
                     render: `Criado com sucesso`,
                     type: "success",

@@ -10,7 +10,7 @@ interface iUserContextProps{
     
 } 
 
-interface iUser{
+export interface iUser{
      id: string;
      name: string | null;
      email: string | null;
@@ -93,7 +93,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
                     progress: undefined,
                     transition: Flip
                });
-              
+               
                localStorage.setItem("@KenzieHubToken",responseApi.data.token)
                setUser(responseApi.data.user)
                setTechnologysUser(responseApi.data.user.techs)
