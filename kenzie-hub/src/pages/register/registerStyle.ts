@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "animate.css"
 
 const Section = styled.section`
      display: flex;
@@ -8,6 +9,7 @@ const Section = styled.section`
      width: 500px;
      max-width: 100%;
      margin: 16px auto;
+    
 
      .containerLogo{
 
@@ -15,6 +17,7 @@ const Section = styled.section`
           justify-content: space-between;
           align-items: flex-start;
           width: 100%;
+          animation: backInLeft 0.8s ease-out;
 
           h1{
                font:var(--title-1);
@@ -51,6 +54,8 @@ const RegisterForm = styled.form`
      padding: 16px;
      border-radius: 6px;
      background-color: var(--gray-3);
+     animation:fadeIn 2.5s ease;
+     
 
      h2{
           font:var(--title-2);

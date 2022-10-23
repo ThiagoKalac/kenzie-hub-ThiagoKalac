@@ -26,6 +26,7 @@ const Modal = ({setShowModal}:iModalProps) => {
      
      const closeModal = () => { 
           setShowModal(false)
+          
      }
      
      const onSubimit = (data:iCreateTechnology) => {

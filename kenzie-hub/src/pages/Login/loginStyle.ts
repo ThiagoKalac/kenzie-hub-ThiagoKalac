@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "animate.css"
 
 const Section = styled.section`
      display: flex;
@@ -14,6 +15,7 @@ const Section = styled.section`
           font:var(--title-1);
           color: var(--color-primary);
           margin-bottom: 32px;
+          animation: zoomInRight 1.5s ease-in; 
      }
 
 `
@@ -28,6 +30,7 @@ const LoginForm = styled.form`
      padding: 16px;
      border-radius: 6px;
      background-color: var(--gray-3);
+     animation: fadeInLeftBig 1s ease;
 
      h2{
           font:var(--title-2);

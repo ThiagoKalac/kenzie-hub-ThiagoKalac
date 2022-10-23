@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import "animate.css"
 
 const ModalDialog = styled.dialog`
 
@@ -9,7 +10,7 @@ const ModalDialog = styled.dialog`
      border-style: none;
      margin: 0 auto;
      border-radius: 8px;
-    
+     animation: fadeInDown 1s ease;
 
      .divHeaderModal{
           display: flex;

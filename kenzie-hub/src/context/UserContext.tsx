@@ -2,7 +2,7 @@ import { toast, Flip } from "react-toastify";
 import {LoginUserApi, RegisterUserApi, UserProfile } from "../services/api";
 import { useNavigate } from "react-router-dom";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { iUserLogin } from "../pages/login/Login";
+import { iUserLogin } from "../pages/Login/Login";
 import { iUserRegister } from "../pages/register/register";
 
 interface iUserContextProps{
