@@ -1,7 +1,8 @@
 import axios from "axios";
 import { iCreateTechnology } from "../components/modal/modal";
 import { iUser } from "../context/UserContext";
-import { iUserLogin } from "../pages/login/Login";
+import { iUserLogin } from "../pages/Login/Login";
+
 import { iUserRegister } from "../pages/register/register";
 
 const apiRequest = axios.create({
