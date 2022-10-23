@@ -57,7 +57,7 @@ const UserProvider = ({ children }: iUserContextProps) => {
                const token = localStorage.getItem("@KenzieHubToken")
                
                if (token) {
-                    
+                    navigate("/dashboard")
                     try {
                          const responseApi = await UserProfile(token)
                          setUser(responseApi.data)
